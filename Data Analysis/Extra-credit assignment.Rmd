@@ -1,0 +1,93 @@
+---
+title: "DA Exercises"
+author: "Hira Piracha"
+output:
+  pdf_document: default
+  html_document: default
+---
+##Exercicse 1.1
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readr)
+library(ggplot2)
+library(plyr)
+```
+
+
+```{r vienna-hotels}
+getwd()
+hotels_vienna <- read.csv(file="/Users/hirapiracha/R-Coding1/hotels-vienna.csv", header=TRUE, sep=",")
+```
+
+**1.)**
+```{r sample 1}
+Test1 <- hotels_vienna[sample(nrow(hotels_vienna), 25), ]
+(Average_1 = mean(Test1$price, na.rm = TRUE))
+```
+
+**2.**
+```{r sample 2}
+Test2 <- hotels_vienna[sample(nrow(hotels_vienna), 50), ]
+(Average_2 = mean(Test2$price, na.rm = TRUE))
+```
+
+**3.**
+```{r sample 3}
+Test3 <- hotels_vienna[sample(nrow(hotels_vienna), 200), ]
+(Average_3 = mean(Test3$price, na.rm = TRUE))
+```
+
+**4.**
+```{r sample 4}
+(Average_4 = mean(hotels_vienna$price, na.rm = TRUE))
+```
+
+#Summary: The outcomes were different each time I ran the sample. 
+#There is a price differene between between the average hotel prices of the data and the sampling. However, more testing is needed for further analysis. 
+
+##Exercise 2.5
+
+```{r}
+library(dplyr)
+epl_games <- read.csv(file="/Users/hirapiracha/R-Coding1/epl_games.csv", header=TRUE, sep=",")
+head(epl_games)
+```
+
+cols(
+  div = col_character(),
+  season = col_double(),
+  date = col_character(),
+  team_home = col_character(),
+  team_away = col_character(),
+  points_home = col_double(),
+  points_away = col_double(),
+  sgoals_home = col_double(), 
+  goals_away = col_double()
+)
+```{r}
+st2 <- epl_games %>% group_by(team_home) %>% 
+  filter(n_distinct(season) == 11) %>%
+  summarise(team_home, season)
+
+#Teams that played in all seasons:
+#Arsenal
+#Everton
+#Chelsea
+#Man United
+#Liverpool
+#Tottenham
+#Man City
+```
+
+```{r}
+st3 <- epl_games %>% group_by(team_home) %>% 
+  filter(n_distinct(season) == 1) %>%
+  summarise(team_home, season)
+
+#Teams that only played once
+
+#Blackpool
+#Reading
+```
+
